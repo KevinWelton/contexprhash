@@ -3,7 +3,11 @@ project(constexprhash)
 
 set(CMAKE_CXX_STANDARD 20)
 
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-elide-type -fdiagnostics-show-template-tree")
+#set(CMAKE_VERBOSE_MAKEFILE ON)
+
 add_executable(constexprhash main.cpp
         sha256_constexpr/sha256.h
         sha256_constexpr/sha256-msgblock-phase1.h
-        sha256_constexpr/sha256-algorithm.h)
+        sha256_constexpr/sha256-algorithm.h
+)
