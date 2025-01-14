@@ -10,4 +10,5 @@ add_executable(constexprhash main.cpp
         sha256_constexpr/sha256.h
         sha256_constexpr/sha256-msgblock-phase1.h
         sha256_constexpr/sha256-algorithm.h
+        sha256_constexpr/sha256_constants.h
 )

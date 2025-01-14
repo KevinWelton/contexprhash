@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <array>
+#include "sha256_constants.h"
 
 static constexpr size_t sha256_hash_result_size = 256;
 using sha256_hash_result = std::array<char, sha256_hash_result_size>;

@@ -33,6 +33,14 @@ void readable_static_assert()
 
 int main()
 {
+    // =====================================================
+    // Print some values from the consts to make sure they're correct
+
+    printf("first and last byte of initial hash values: %d, %d\n", initial_hash[0][0], initial_hash[7][3]);
+    printf("first and last byte of round constants: %d, %d\n", round_constant[0][0], round_constant[63][3]);
+
+    // =====================================================
+
     constexpr char test_short[] = "abcdefgh";
 
     constexpr sha256_hash_result test_short_sha256 = sha256(test_short);
