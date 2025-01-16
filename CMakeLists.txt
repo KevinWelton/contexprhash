@@ -8,7 +8,8 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(constexprhash main.cpp
         sha256_constexpr/sha256.h
-        sha256_constexpr/sha256-msgblock-phase1.h
-        sha256_constexpr/sha256-algorithm.h
         sha256_constexpr/sha256_constants.h
+        sha256_constexpr/sha256_chunkify.h
+        proto/sha256_proto.h
+        sha256_constexpr/sha256_types.h
 )
