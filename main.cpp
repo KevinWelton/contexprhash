@@ -1,7 +1,7 @@
-#include <stdlib.h>
-#include <signal.h>
+#include "stdafx.h"
 
-//#include "sha256_constexpr/sha256.h"
+#include "sha256_constexpr/sha256_tests.h"
+
 #include "proto/chunktacular.h"
 
 // BEGIN Use this section for testing diagnostic output with static assert
@@ -49,18 +49,21 @@ int main()
 //    printf("test_short_sha256\nValue=%s\nHash=%s\n\n", test_short, stringified.data());
 
 // This is the old test for the chunkify prototype in the proto folder to make sure it works
-    constexpr char test_short[] = "abcdefghijklmnopq";
-    //constexpr char test_short[] = "a";
-    auto val = chunkify(test_short);
-    for (auto& chunk : val)
-    {
-        for (auto val : chunk)
-        {
-            printf("%d ", val);
-        }
+    // constexpr char test_short[] = "abcdefghijklmnopq";
+    // //constexpr char test_short[] = "a";
+    // auto val = chunkify(test_short);
+    // for (auto& chunk : val)
+    // {
+    //     for (auto val : chunk)
+    //     {
+    //         printf("%d ", val);
+    //     }
+    //
+    //     printf("\n");
+    // }
 
-        printf("\n");
-    }
+
+    sha256::tests::sha256_tests();
 
     return 0;
 }

@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "../stdafx.h"
 #include "sha256_constants.h"
 
 namespace sha256

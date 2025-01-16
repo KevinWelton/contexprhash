@@ -4,14 +4,18 @@
 
 #pragma once
 
-#include <array>
+#include "../stdafx.h"
 
 namespace sha256
 {
+    constexpr size_t bits_in_byte = 8;
+    constexpr size_t chunk_length_bits = 512;
+    constexpr size_t hash_result_size_bits = 256;
+
     // In bytes
-    constexpr size_t chunk_word_length = 4;
-    constexpr size_t chunk_length = 512 / chunk_word_length;
-    constexpr size_t hash_result_size =  256 / chunk_word_length;
+    constexpr size_t chunk_word_length = sizeof(uint32_t);
+    constexpr size_t chunk_length = chunk_length_bits / bits_in_byte;
+    constexpr size_t hash_result_size =  hash_result_size_bits / bits_in_byte;
 
     constexpr std::array<std::array<uint8_t, 4>, 8> initial_hash = {{
         {0x6a, 0x09, 0xe6, 0x67},

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <array>
+#include "../stdafx.h"
 
 constexpr size_t chunk_size = 12;
 using chunk = std::array<uint8_t, chunk_size>;
@@ -59,21 +59,20 @@ constexpr auto chunk_process(const std::array<char, N> msg)
 
     std::array<chunk, chunk_count> chunks = { };
 
+    // The arrays are contiguous, so just write all the bits.
     auto msg_it = msg.begin();
-    for (size_t i = 0; i < full_chunks; ++i)
-    {
-        std::copy_n(msg_it, chunk_size, chunks[i].begin());
-        std::advance(msg_it, chunk_size);
-    }
+    std::copy_n(msg_it, N, chunks[0].begin());
 
-    auto dest_it = chunks[full_chunks].begin();
-    std::copy_n(msg_it, N % chunk_size, dest_it);
-    std::advance(dest_it, N % chunk_size);
-    *dest_it = 0x80; // Pad end of data with 1
-    std::advance(dest_it, 1);
+    // Tack on the "1" to the end of the message
+    auto dest_it = chunks[0].begin();
+    std::advance(dest_it, N);
+    *dest_it = 0x80;
+
+    auto dest_reverse_it = chunks[chunk_count - 1].rbegin();
+    std::advance(dest_reverse_it, sizeof(uint64_t) - 1);
 
     std::array<char, sizeof(N)> coda = std::bit_cast<std::array<char, sizeof(N)>>(N);
-    std::copy_n(coda.begin(), coda.size(), dest_it);
+    std::copy_n(coda.begin(), coda.size(), chunks[chunk_count - 1].rbegin());
 
     return chunks;
 }
@@ -81,6 +80,7 @@ constexpr auto chunk_process(const std::array<char, N> msg)
 template <size_t N>
 constexpr auto chunkify(const char(&msg)[N])
 {
+    // Adjust for the null character
     std::array<char, N - 1> arr;
     std::copy_n(std::begin(msg), N - 1, arr.begin());
 
