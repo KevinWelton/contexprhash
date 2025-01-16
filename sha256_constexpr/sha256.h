@@ -6,6 +6,7 @@
 
 #include "../stdafx.h"
 #include "sha256_chunkify.h"
+#include "sha256_wordify.h"
 
 namespace sha256
 {
@@ -13,10 +14,9 @@ namespace sha256
     constexpr auto sha256(const char(&msg)[N])
     {
         auto chunks = sha256::internal::chunkify(msg);
-
-
+        auto words = sha256::internal::wordify(chunks);
 
         // Temp
-        return chunks;
+        return words;
     }
 }

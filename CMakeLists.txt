@@ -14,4 +14,5 @@ add_executable(constexprhash main.cpp
         sha256_constexpr/sha256_types.h
         stdafx.h
         sha256_constexpr/sha256_tests.h
+        sha256_constexpr/sha256_wordify.h
 )

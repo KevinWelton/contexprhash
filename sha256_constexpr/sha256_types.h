@@ -14,5 +14,6 @@ namespace sha256
     namespace internal
     {
         using chunk = std::array<uint8_t, chunk_length>;
+        using chunk_words = std::array<std::array<uint8_t, sizeof(uint32_t)>, words_per_chunk>;
     }
 }

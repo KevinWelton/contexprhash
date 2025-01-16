@@ -17,18 +17,46 @@ namespace sha256::tests
     constexpr char fullchunk_and_a_half_str[] = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqr";
     constexpr char twofullchunks_str[] = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijkl";
 
+    // This is for printing a chunk
+    // template <typename T>
+    // void print_result(const char* test_name, size_t message_length, T chunks)
+    // {
+    //     printf("Test: %s\n", test_name);
+    //     printf("Message length: %lu\n", message_length);
+    //
+    //     for (size_t i = 0; i < chunks.size(); ++i)
+    //     {
+    //         printf("Chunk %lu: ", i);
+    //         for (auto& val : chunks[i])
+    //         {
+    //             printf("%d ", val);
+    //         }
+    //
+    //         printf("\n");
+    //     }
+    //
+    //     printf("\n");
+    // }
+
+    // This is for printing words
     template <typename T>
-    void print_result(const char* test_name, size_t message_length, T chunks)
+    void print_result(const char* test_name, size_t message_length, T chunk_words)
     {
         printf("Test: %s\n", test_name);
         printf("Message length: %lu\n", message_length);
 
-        for (size_t i = 0; i < chunks.size(); ++i)
+        for (size_t i = 0; i < chunk_words.size(); ++i)
         {
-            printf("Chunk %lu: ", i);
-            for (auto& val : chunks[i])
+            printf("Chunk %lu\n", i);
+            for (size_t j = 0; j < words_per_chunk; ++j)
             {
-                printf("%d ", val);
+                printf("Word %lu: ", j);
+                for (auto& val : chunk_words[i][j])
+                {
+                    printf("%d ", val);
+                }
+
+                printf("\n");
             }
 
             printf("\n");
@@ -46,11 +74,5 @@ namespace sha256::tests
         print_result("Full chunk (without coda)", strlen(fullchunk_str), sha256::sha256(fullchunk_str));
         print_result("Full chunk + half chunk (without coda)", strlen(fullchunk_and_a_half_str), sha256::sha256(fullchunk_and_a_half_str));
         print_result("Two full chunks (without coda)", strlen(twofullchunks_str), sha256::sha256(twofullchunks_str));
-
-        // printf("Test: Empty string\n");
-        // printf("Message length: %lu\n", strlen(test_short));
-        // auto val = sha256::sha256(test_short);
-
-
     }
 }

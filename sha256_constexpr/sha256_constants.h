@@ -12,6 +12,8 @@ namespace sha256
     constexpr size_t chunk_length_bits = 512;
     constexpr size_t hash_result_size_bits = 256;
 
+    constexpr size_t words_per_chunk = 64;
+
     // In bytes
     constexpr size_t chunk_word_length = sizeof(uint32_t);
     constexpr size_t chunk_length = chunk_length_bits / bits_in_byte;
