@@ -2,7 +2,7 @@
 
 #include "sha256_constexpr/sha256_tests.h"
 
-#include "proto/chunktacular.h"
+#include "proto/bitcast.h"
 
 // BEGIN Use this section for testing diagnostic output with static assert
 //template <sha256::hash_result val>
@@ -62,6 +62,8 @@ int main()
     //     printf("\n");
     // }
 
+    // Test bitcast prototype
+    //bitcast()
 
     sha256::tests::sha256_tests();
 

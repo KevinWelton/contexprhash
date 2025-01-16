@@ -53,7 +53,7 @@ namespace sha256::tests
                 printf("Word %lu: ", j);
                 for (auto& val : chunk_words[i][j])
                 {
-                    printf("%d ", val);
+                    printf("%x ", val);
                 }
 
                 printf("\n");
