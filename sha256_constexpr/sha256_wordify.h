@@ -23,6 +23,7 @@ namespace sha256::internal
         {
             for (size_t j = 16; j < 64; ++j)
             {
+                // TODO: Make sure we really need endianness stuff. I expect we do because of overflow.
                 std::array<uint8_t, chunk_word_length> s0target_reversed = { };
                 std::copy_n(words[i][j - 15].begin(), chunk_word_length, s0target_reversed.rbegin());
                 uint32_t s0target_little_endian = std::bit_cast<uint32_t>(s0target_reversed);

@@ -39,27 +39,40 @@ namespace sha256::tests
     // }
 
     // This is for printing words
-    template <typename T>
-    void print_result(const char* test_name, size_t message_length, T chunk_words)
+    // template <typename T>
+    // void print_result(const char* test_name, size_t message_length, T chunk_words)
+    // {
+    //     printf("Test: %s\n", test_name);
+    //     printf("Message length: %lu\n", message_length);
+    //
+    //     for (size_t i = 0; i < chunk_words.size(); ++i)
+    //     {
+    //         printf("Chunk %lu\n", i);
+    //         for (size_t j = 0; j < words_per_chunk; ++j)
+    //         {
+    //             printf("Word %lu: ", j);
+    //             for (auto& val : chunk_words[i][j])
+    //             {
+    //                 printf("%x ", val);
+    //             }
+    //
+    //             printf("\n");
+    //         }
+    //
+    //         printf("\n");
+    //     }
+    //
+    //     printf("\n");
+    // }
+
+    void print_result(const char* test_name, size_t message_length, const hash_result result)
     {
         printf("Test: %s\n", test_name);
         printf("Message length: %lu\n", message_length);
-
-        for (size_t i = 0; i < chunk_words.size(); ++i)
+        printf("SHA256: ");
+        for (size_t i = 0; i < result.size(); ++i)
         {
-            printf("Chunk %lu\n", i);
-            for (size_t j = 0; j < words_per_chunk; ++j)
-            {
-                printf("Word %lu: ", j);
-                for (auto& val : chunk_words[i][j])
-                {
-                    printf("%x ", val);
-                }
-
-                printf("\n");
-            }
-
-            printf("\n");
+            printf("%x", result[i]);
         }
 
         printf("\n");

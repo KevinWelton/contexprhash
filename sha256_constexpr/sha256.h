@@ -7,6 +7,7 @@
 #include "../stdafx.h"
 #include "sha256_chunkify.h"
 #include "sha256_wordify.h"
+#include "sha256_compression.h"
 
 namespace sha256
 {
@@ -15,8 +16,6 @@ namespace sha256
     {
         auto chunks = sha256::internal::chunkify(msg);
         auto words = sha256::internal::wordify(chunks);
-
-        // Temp
-        return words;
+        return sha256::internal::compress(words);
     }
 }
