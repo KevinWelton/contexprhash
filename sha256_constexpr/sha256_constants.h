@@ -13,7 +13,7 @@ namespace sha256
         constexpr size_t bits_in_byte = 8;
         constexpr size_t chunk_length_bits = 512;
         constexpr size_t hash_result_size_bits = 256;
-
+        constexpr size_t hash_result_string_length = 64;
 
         constexpr size_t compression_var_count = 8;
         constexpr size_t words_per_chunk = 64;
@@ -22,8 +22,7 @@ namespace sha256
         constexpr size_t chunk_word_length = sizeof(uint32_t);
         constexpr size_t chunk_length = chunk_length_bits / bits_in_byte;
 
-
-        //
+        // Initial hash values for compression step
         constexpr std::array<uint32_t, 8> initial_hash = {
             0x6a09e667,
             0xbb67ae85,
@@ -34,6 +33,7 @@ namespace sha256
             0x1f83d9ab,
             0x5be0cd19 };
 
+        // Round constants for compression step
         constexpr std::array<uint32_t, 64> round_constant = {
             0x428a2f98,
             0x71374491,

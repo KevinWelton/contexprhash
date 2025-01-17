@@ -9,6 +9,26 @@
 
 namespace sha256::internal
 {
+    constexpr auto stringify(const hash_result result)
+    {
+        sha256_hash str = { };
+        auto str_it = std::begin(str);
+
+        auto bits_to_char = [] (const char bits) -> char {
+            return (bits < 10) ? bits + '0' : (bits - 10) + 'a';
+        };
+
+        for (const uint8_t result_byte : result)
+        {
+            *str_it = bits_to_char(result_byte >> 4);
+            str_it++;
+            *str_it = bits_to_char(result_byte & 0x0f);
+            str_it++;
+        }
+
+        return str;
+    }
+
     template <size_t N>
     constexpr auto compress(const std::array<std::array<std::array<uint8_t, chunk_word_length>, words_per_chunk>, N> chunks)
     {
@@ -65,6 +85,6 @@ namespace sha256::internal
             std::advance(result_it, chunk_word_length);
         }
 
-        return result;
+        return stringify(result);
     }
 }
