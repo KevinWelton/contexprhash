@@ -16,7 +16,12 @@ namespace sha256::internal
         std::array<std::array<std::array<uint8_t, chunk_word_length>, words_per_chunk>, N> words = { };
         for (size_t i = 0; i < N; ++i)
         {
-            std::copy_n(chunks[i].begin(), chunk_length, words[i][0].begin());
+            auto chunk_it = chunks[i].begin();
+            for (size_t j = 0; j < 16; ++j)
+            {
+                std::copy_n(chunk_it, chunk_word_length, words[i][j].begin());
+                std::advance(chunk_it, chunk_word_length);
+            }
         }
 
         for (size_t i = 0; i < N; ++i)

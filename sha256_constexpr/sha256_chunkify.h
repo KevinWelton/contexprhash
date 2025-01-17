@@ -21,14 +21,36 @@ namespace sha256::internal
         std::array<chunk, chunk_count> chunks = { };
 
         // The arrays are contiguous, so just write all the bits.
+        size_t bytes_left = N;
+        auto chunk_it = chunks.begin();
         auto msg_it = msg.begin();
-        std::copy_n(msg_it, N, chunks[0].begin());
+
+        while (bytes_left >= chunk_length)
+        {
+            std::copy_n(msg_it, chunk_length, (*chunk_it).begin());
+            std::advance(msg_it, chunk_length);
+            std::advance(chunk_it, 1);
+
+            bytes_left -= chunk_length;
+        }
+
+        auto chunk_data_it = (*chunk_it).begin();
+        if (bytes_left)
+        {
+            std::copy_n(msg_it, bytes_left, chunk_data_it);
+            std::advance(chunk_data_it, bytes_left);
+        }
+
+        if (chunk_data_it == (*chunk_it).end())
+        {
+            std::advance(chunk_it, 1);
+            chunk_data_it = (*chunk_it).begin();
+        }
 
         // Tack on the "1" to the end of the message
-        auto dest_it = chunks[0].begin();
-        std::advance(dest_it, N);
-        *dest_it = 0x80;
+        *chunk_data_it = 0x80;
 
+        // Add the length onto the very end of the chunks
         auto dest_reverse_it = chunks[chunk_count - 1].rbegin();
         std::advance(dest_reverse_it, sizeof(uint64_t) - 1);
 
