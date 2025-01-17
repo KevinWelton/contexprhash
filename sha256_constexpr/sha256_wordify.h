@@ -12,7 +12,8 @@ namespace sha256::internal
     template <size_t N>
     constexpr auto wordify(const std::array<chunk, N> chunks)
     {
-        // Each chunk gets split into 64 32-bit words. Copy the chunk into the first 16 words.
+        // Each chunk gets split into 64 32-bit words. Copy the chunk data into the first 16 words (32 * 16 = 512, the
+        //   chunk size for SHA256.
         std::array<std::array<std::array<uint8_t, chunk_word_length>, words_per_chunk>, N> words = { };
         for (size_t i = 0; i < N; ++i)
         {
@@ -26,7 +27,7 @@ namespace sha256::internal
 
         for (size_t i = 0; i < N; ++i)
         {
-            for (size_t j = 16; j < 64; ++j)
+            for (size_t j = 16; j < words_per_chunk; ++j)
             {
                 // TODO: Make sure we really need endianness stuff. I expect we do because of overflow.
                 std::array<uint8_t, chunk_word_length> s0target_reversed = { };
@@ -51,9 +52,10 @@ namespace sha256::internal
                 std::copy_n(words[i][j - 16].begin(),chunk_word_length, w0.rbegin());
                 std::copy_n(words[i][j - 7].begin(), chunk_word_length, w1.rbegin());
 
+                // Calculate the sum and then copy it into the target word in reverse so it is back in big endian.
                 uint32_t sum = std::bit_cast<uint32_t>(w0) + s0 + std::bit_cast<uint32_t>(w1) + s1;
-                std::array<uint8_t, chunk_word_length> sum_bigendian = std::bit_cast<std::array<uint8_t, chunk_word_length>>(sum);
-                std::copy_n(sum_bigendian.rbegin(), sum_bigendian.size(), words[i][j].begin());
+                std::array<uint8_t, chunk_word_length> word_val_littleendian = std::bit_cast<std::array<uint8_t, chunk_word_length>>(sum);
+                std::copy_n(word_val_littleendian.rbegin(), word_val_littleendian.size(), words[i][j].begin());
             }
         }
 
