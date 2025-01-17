@@ -14,8 +14,8 @@ namespace sha256
     template<size_t N>
     constexpr auto sha256(const char(&msg)[N])
     {
-        auto chunks = sha256::internal::chunkify(msg);
-        auto words = sha256::internal::wordify(chunks);
-        return sha256::internal::compress(words);
+        return sha256::internal::compress(
+            sha256::internal::wordify(
+                sha256::internal::chunkify(msg)));
     }
 }

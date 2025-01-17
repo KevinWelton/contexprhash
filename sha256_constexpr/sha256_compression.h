@@ -14,7 +14,7 @@ namespace sha256::internal
         sha256_hash str = { };
         auto str_it = std::begin(str);
 
-        auto bits_to_char = [] (const char bits) -> char {
+        constexpr auto bits_to_char = [] (const uint8_t bits) -> char {
             return (bits < 10) ? bits + '0' : (bits - 10) + 'a';
         };
 
